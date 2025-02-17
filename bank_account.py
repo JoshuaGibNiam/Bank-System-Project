@@ -11,12 +11,12 @@ class BankAccount:
         return self.__account_holder
 
     def get_account_number(self) -> int:
-        """Returns the account number in a float"""
+        """Returns the account number in a int"""
         return self.__account_number
 
     def get_balance(self) -> float:
-        """Returns the account balance in a float"""
-        return self.__balance
+        """Returns the account balance in a float, round 2 d.p."""
+        return round(self.__balance, 2)
 
     def deposit(self, amount: int):
         """Deposits an amount into the account, checks if the deposit is positive

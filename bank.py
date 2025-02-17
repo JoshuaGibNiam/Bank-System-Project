@@ -11,16 +11,27 @@ class Bank:
 
     def add_account(self):
         holder = input("Enter account holder name: ").strip()
-        while not holder.isalpha():
+        while holder.isdigit():
             print("Account holder name must only contain alphabets!")
             holder = input("Enter account holder name: ").strip()
         number = self.generate_randint()
         self.__accounts[number] = BankAccount(holder, str(number), 0)
-        print(f"Bank account of {holder} successfully created.")
+        print(f"Bank account of {holder} successfully created. Bank account number: {number}")
         return True
 
-    def retrieve_account(self, num):
-        return self.__accounts[num]
+    def retrieve_account_int(self, num: int):
+        """Retrieve account by account number"""
+        if num in self.__accounts:
+            return self.__accounts[num]
+        else:
+            return False
+    def retrieve_account_str(self, name: str):
+        """Retrieve account by account holder"""
+        for obj in self.__accounts.values():
+            if obj.get_account_holder() == name:
+                return str(obj)
+        return False
+
 
     def delete_account(self, num):
         del self.__accounts[num]
@@ -51,3 +62,9 @@ class Bank:
             account2.deposit(amount)
         else:
             print("Transfer failed.")
+
+if __name__ == "__main__":
+    bank = Bank()
+    bank.add_account()
+    bank.add_account()
+    bank.list_accounts()
