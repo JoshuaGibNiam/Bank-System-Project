@@ -23,7 +23,7 @@ class BankAccount:
         Return True if deposit was successful, False if not"""
         if amount >= 0:
             self.__balance += amount
-            print(f"Successfully deposited {amount} into the account.")
+            print(f"Successfully deposited {amount} into the account of {self.__account_holder}.")
             return True
         else:
             print("Invalid amount to be deposited.")
@@ -33,7 +33,7 @@ class BankAccount:
         Returns True if withdrawal was successful, False if not"""
         if  amount > 0 and self.__balance >= amount:
             self.__balance -= amount
-            print(f"Successfully withdrawn {amount} from the account.")
+            print(f"Successfully withdrawn {amount} from the account of {self.__account_holder}.")
             return True
         else:
             print("Insufficient funds / Invalid amount")

@@ -1,5 +1,5 @@
 from bank import Bank
-from bank_account import BankAccount
+
 class Interface:
     def __init__(self):
         self.__bank = Bank()
@@ -22,6 +22,9 @@ class Interface:
             return True
         elif command == "3" or command.lower() == "exit":
             return False
+        else:
+            print("Invalid command")
+            return True
 
     def display_account_menu(self):
         print("Welcome to account management!\n"
@@ -42,22 +45,23 @@ class Interface:
             acc = self.__bank.retrieve_account_int(num)
             if acc:
                 balance = acc.get_balance()
+                print(f"Balance for account: {num}: ${balance}")
             else:
                 print("Account does not exist!")
             return True
 
         elif command == "2" or command.lower() == "deposit money":
             num = input("Please enter your account number: ")
-            while not isinstance(num, int):
+            while not num.isdigit():
                 num = input("Invalid input. Please enter your account number: ")
             num = int(num)
             acc = self.__bank.retrieve_account_int(num)
             if acc:
                 dep = input("Please enter your account deposit amount: ")
-                while not isinstance(dep, int):
+                while not dep.isdigit():
                     dep = input("Invalid input. Please enter the deposit amount: ")
                 dep = int(dep)
-                truefalse = acc.deposit_money(dep)
+                truefalse = acc.deposit(dep)
                 if not truefalse:
                     print("Deposit failed")
             else:
@@ -66,16 +70,16 @@ class Interface:
 
         elif command == "3" or command.lower() == "withdraw money":
             num = input("Please enter your account number: ")
-            while not isinstance(num, int):
+            while not num.isdigit():
                 num = input("Invalid input. Please enter your account number: ")
             num = int(num)
             acc = self.__bank.retrieve_account_int(num)
             if acc:
                 withd = input("Please enter your account withdraw amount: ")
-                while not isinstance(withd, int):
+                while not withd.isdigit():
                     withd = input("Invalid input. Please enter the withdraw amount: ")
                 withd = int(withd)
-                truefalse = acc.withdraw_money(withd)
+                truefalse = acc.withdraw(withd)
                 if not truefalse:
                     print("Withdraw failed")
             else:
@@ -84,10 +88,10 @@ class Interface:
 
         elif command == "4" or command.lower() == "delete account":
             num = input("Please enter your account number: ")
-            while not isinstance(num, int):
+            while not num.isdigit():
                 num = input("Invalid input. Please enter your account number: ")
             num = int(num)
-            acc = self.__bank.retrieve_account_str(num)
+            acc = self.__bank.retrieve_account_int(num)
             if acc:
                 self.__bank.delete_account(num)
             else:
@@ -118,8 +122,6 @@ class Interface:
             return True
         elif command == "3" or command.lower() == "find account":
             acc = input("Please enter your account number or account holder name: ")
-            while not acc.isdigit() or acc.isalpha():
-                acc = input("Invalid input. Please enter your account number or account holder name: ")
             if acc.isdigit():  #if user entered account number
                 acc = int(acc)
                 acc = self.__bank.retrieve_account_int(acc)
@@ -130,20 +132,15 @@ class Interface:
             return True
         elif command == "4" or command.lower() == "transfer money":
             amount = input("How much would you like to transfer?: ")
-            while not amount.isdigit() or (amount.isdigit() and amount <= 0):
+            while not amount.isdigit() or (amount.isdigit() and int(amount) <= 0):
                 amount = input("Invalid input. How much would you like to transfer?: ")
-            account1 = input("Please enter your account holder name: ")
-            account1 = self.__bank.retrieve_account_str(account1)
-            while not account1:
-                print("Account does not exist!")
-                account1 = input("Please enter your account number or account holder name: ")
+            amount = int(amount)
+            account1 = input("Please enter the holder's name of the account you want to transfer from: ")
 
-            account2 = input("Please enter your account holder name: ")
-            account2 = self.__bank.retrieve_account_str(account2)
-            while not account2:
-                print("Account does not exist!")
-                account2 = input("Please enter your account number or account holder name: ")
-            self.__bank.transfer_amount(account1, account2, amount)
+            account2 = input("Please enter the holder's name of the account you want to transfer to: ")
+            truefalse = self.__bank.transfer_amount(account1, account2, amount)
+            if not truefalse:
+                print("Transfer failed.")
             return True
         elif command == "5" or command.lower() == "back to main menu" or command == "main menu":
             print("Heading back to main menu.")
@@ -157,6 +154,7 @@ class Interface:
             self.display_main_menu()
             if not self.handle_main_menu():
                 break
+
 
 if __name__ == "__main__":
     interface = Interface()

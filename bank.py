@@ -51,15 +51,22 @@ class Bank:
         print("End of list. \n")
         return True
 
-    def transfer_amount(self, account1, account2, amount):
+    def transfer_amount(self, account1: str, account2: str, amount):
         """Transfers amount from account 1 to account 2 (pass holder name as arg)"""
+        acc1_obj, acc2_obj = None, None
         for values in self.__accounts.values():
             if values.get_account_holder() == account1:
-                account1 = values    #reassign account1 to BankAccount instance
+                acc1_obj = values    #reassign account1 to BankAccount instance
             if values.get_account_holder() == account2:
-                account2 = values
-        if account1.withdraw(amount):
-            account2.deposit(amount)
+                acc2_obj = values
+        if acc2_obj is None:
+            print("Account 2 holder name does not exist!")
+            return False
+        elif acc1_obj is None:
+            print("Account 1 holder name does not exist!")
+            return False
+        if acc1_obj.withdraw(amount):
+            acc2_obj.deposit(amount)
         else:
             print("Transfer failed.")
 
