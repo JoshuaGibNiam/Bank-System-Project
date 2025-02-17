@@ -151,8 +151,10 @@ class Interface:
 
     def run(self):
         while True:
+            self.__bank.load()
             self.display_main_menu()
             if not self.handle_main_menu():
+                self.__bank.save()
                 break
 
 

@@ -1,5 +1,6 @@
 from bank_account import BankAccount
 import random
+import json
 class Bank:
     """
     The Bank class represents a financial institution that manages multiple bank accounts. It serves
@@ -8,6 +9,18 @@ class Bank:
     """
     def __init__(self):
         self.__accounts = {}
+
+    def load(self):
+        try:
+            with open('bank.json', "r") as file:
+                self.__accounts = json.load(file)
+        except (FileNotFoundError, json.decoder.JSONDecodeError):
+            with open('bank.json', "w") as file:
+                self.__accounts = {}
+
+    def save(self):
+        with open('bank.json', "w") as file:
+            json.dump(self.__accounts, file)
 
     def add_account(self):
         holder = input("Enter account holder name: ").strip()
