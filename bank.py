@@ -12,14 +12,18 @@ class Bank:
 
     def load(self):
         try:
-            with open('bank.json', "r") as file:
+            with open('.venv/bank.json', "r") as file:
                 self.__accounts = json.load(file)
+            for key, values in self.__accounts.items():
+                self.__accounts[key] = BankAccount(values["holder"], values["number"], values["balance"])
         except (FileNotFoundError, json.decoder.JSONDecodeError):
-            with open('bank.json', "w") as file:
+            with open('.venv/bank.json', "w") as file:
                 self.__accounts = {}
 
     def save(self):
-        with open('bank.json', "w") as file:
+        for key, values in self.__accounts.items():
+            self.__accounts[key] = values.to_dict()
+        with open('.venv/bank.json', "w") as file:
             json.dump(self.__accounts, file)
 
     def add_account(self):

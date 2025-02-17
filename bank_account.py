@@ -39,6 +39,15 @@ class BankAccount:
             print("Insufficient funds / Invalid amount")
             return False
 
+    def to_dict(self):
+        """Converts the BankAccount object to a dictionary."""
+        return {
+            'holder': self.__account_holder,
+            'number': self.__account_number,
+            'balance': self.__balance
+        }
+
+
 
 
 
