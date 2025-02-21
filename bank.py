@@ -16,6 +16,7 @@ class Bank:
                 self.__accounts = json.load(file)
             for key, values in self.__accounts.items():
                 self.__accounts[key] = BankAccount(values["holder"], values["number"], values["balance"])
+            self.__accounts = {int(k): v for k, v in self.__accounts.items()}  ##json converts int keys into strings (took me 1.5 hours to realize ts)
         except (FileNotFoundError, json.decoder.JSONDecodeError):
             with open('.venv/bank.json', "a") as file:
                 json.dump(self.__accounts, file)
@@ -87,8 +88,20 @@ class Bank:
         else:
             print("Transfer failed.")
 
+    def debug(self):
+        """Used for debugging only"""
+        for keys in self.__accounts.keys():
+            print(type(keys))
+
+    def to_int_debug(self):
+        """Convert all dictionary keys to integers if they are strings. (used for debugging)"""
+        self.load()
+
+        self.save()
 if __name__ == "__main__":
     bank = Bank()
-    bank.add_account()
-    bank.add_account()
-    bank.list_accounts()
+    bank.load()
+    print(bank.list_accounts())
+
+    bank.debug()
+
