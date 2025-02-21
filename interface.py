@@ -43,10 +43,10 @@ class Interface:
                 num = input("Invalid input. Please enter your account number: ")
             num = int(num)
             acc = self.__bank.retrieve_account_int(num)
-            if acc:
+            if acc != False:
                 balance = acc.get_balance()
                 print(f"Balance for account: {num}: ${balance}")
-            else:
+            elif acc == False:
                 print("Account does not exist!")
             return True
 
@@ -135,9 +135,9 @@ class Interface:
             while not amount.isdigit() or (amount.isdigit() and int(amount) <= 0):
                 amount = input("Invalid input. How much would you like to transfer?: ")
             amount = int(amount)
-            account1 = input("Please enter the holder's name of the account you want to transfer from: ")
+            account1 = input("Please enter the number of the account you want to transfer from: ")
 
-            account2 = input("Please enter the holder's name of the account you want to transfer to: ")
+            account2 = input("Please enter the number of the account you want to transfer to: ")
             truefalse = self.__bank.transfer_amount(account1, account2, amount)
             if not truefalse:
                 print("Transfer failed.")

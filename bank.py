@@ -17,8 +17,8 @@ class Bank:
             for key, values in self.__accounts.items():
                 self.__accounts[key] = BankAccount(values["holder"], values["number"], values["balance"])
         except (FileNotFoundError, json.decoder.JSONDecodeError):
-            with open('.venv/bank.json', "w") as file:
-                self.__accounts = {}
+            with open('.venv/bank.json', "a") as file:
+                json.dump(self.__accounts, file)
 
     def save(self):
         for key, values in self.__accounts.items():
@@ -72,9 +72,9 @@ class Bank:
         """Transfers amount from account 1 to account 2 (pass holder name as arg)"""
         acc1_obj, acc2_obj = None, None
         for values in self.__accounts.values():
-            if values.get_account_holder() == account1:
+            if values.get_account_number() == account1:
                 acc1_obj = values    #reassign account1 to BankAccount instance
-            if values.get_account_holder() == account2:
+            if values.get_account_number() == account2:
                 acc2_obj = values
         if acc2_obj is None:
             print("Account 2 holder name does not exist!")
