@@ -1,6 +1,7 @@
 from bank_account import BankAccount
 import random
 import json
+import os
 class Bank:
     """
     The Bank class represents a financial institution that manages multiple bank accounts. It serves
@@ -11,14 +12,15 @@ class Bank:
         self.__accounts = {}
 
     def load(self):
-        try:
-            with open('.venv/bank.json', "r") as file:
+        path = ".venv/bank.json"
+        if os.path.exists(path):
+            with open(path, "r") as file:
                 self.__accounts = json.load(file)
             for key, values in self.__accounts.items():
                 self.__accounts[key] = BankAccount(values["holder"], values["number"], values["balance"])
             self.__accounts = {int(k): v for k, v in self.__accounts.items()}  ##json converts int keys into strings (took me 1.5 hours to realize ts)
-        except (FileNotFoundError, json.decoder.JSONDecodeError):
-            with open('.venv/bank.json', "a") as file:
+        else:
+            with open(path, "w") as file:
                 json.dump(self.__accounts, file)
 
     def save(self):
