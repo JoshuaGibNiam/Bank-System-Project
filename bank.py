@@ -47,10 +47,14 @@ class Bank:
             return False
     def retrieve_account_str(self, name: str):
         """Retrieve account by account holder"""
+        acc = []
         for obj in self.__accounts.values():
             if obj.get_account_holder() == name:
-                return str(obj)
-        return False
+                acc.append(str(obj))
+        if len(acc) == 0:
+            return False
+        else:
+            return acc
 
 
     def delete_account(self, num):

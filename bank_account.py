@@ -10,7 +10,7 @@ class BankAccount:
         """Returns the account holder in a string"""
         return self.__account_holder
 
-    def get_account_number(self) -> int:
+    def get_account_number(self) -> str:
         """Returns the account number in a int"""
         return self.__account_number
 
@@ -21,7 +21,7 @@ class BankAccount:
     def deposit(self, amount: int):
         """Deposits an amount into the account, checks if the deposit is positive
         Return True if deposit was successful, False if not"""
-        if amount >= 0:
+        if amount > 0:
             self.__balance += amount
             print(f"Successfully deposited {amount} into the account of {self.__account_holder}.")
             return True
