@@ -18,6 +18,9 @@ Automatically rejects invalid amounts or stop process if the account has insuffi
 8. **Find account**: Find your account by your account number OR account holder.
 9. **Logging**: Automatically logs all accounts to a file, so that the data can be 
 loaded again the next time you use the program.
+10. **Password & Email**: Allows users to set passwords to access account (withdrawing). 
+If user wants to reset their password, they must use their emails. Emails can be retrieved using 
+their password.
 
 ---
 ## Usage
@@ -28,7 +31,10 @@ the bank or manage accounts. Enter a number (1-3) to state your command.
     - Deposit money
     - Withdraw money
     - Delete account
+    - Retrieve Email Account
+    - Reset Password
     - Back to main menu
+
 Enter a number (1-5) to state your command. 
 3. Bank management includes:
     - Create a new account
@@ -42,12 +48,14 @@ to the bank and allow for a graceful exit.
 ---
 ## Code
 1. This program consists of 4 files of code:
-    1. bank_account.py: BankAccount class, which manages individual bank accounts.
-    2. bank.py: Bank class, which manages the bank as a whole.
-    3. interface.py: Front-end of the program, provides menu navigation and handles
-       user inputs.
-    4. main.py: Where the program will be run directly.
+2. 
+```python
+|-bank_account.py #class of individual bank accounts, used for withdrawals, deposits, e.g.
+|-bank.py #class managing the whole bank, including transferring money, e.g.
+|-interface.py #class managing the interface where users will interact with the system.
+|-main.py #where the program will be run
+```
 
 ---
-Monday, 18th of February 2025, 5:51 p.m.
+Friday, 28th of February 2025, 8:43 p.m.
 

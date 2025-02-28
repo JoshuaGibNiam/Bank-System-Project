@@ -29,7 +29,7 @@ class Bank:
         for key, values in self.__accounts.items():
             self.__accounts[key] = values.to_dict()
         with open('.venv/bank.json', "w") as file:
-            json.dump(self.__accounts, file)
+            json.dump(self.__accounts, file, indent=4)
 
     def add_account(self):
         holder = input("Enter account holder name: ").strip()

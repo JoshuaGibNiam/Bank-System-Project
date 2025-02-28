@@ -34,7 +34,7 @@ class BankAccount:
             count += 1
         if email == self.__email:
             self.__password = password
-            print(f"New password: {account.password}.")
+            print(f"New password: {self.password}.")
 
     @property
     def account_holder(self) -> str:
