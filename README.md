@@ -42,13 +42,16 @@ Enter a number (1-5) to state your command.
     - Find account
     - Transfer money
     - Back to main menu
+
 Enter a number (1-5) to state your command.
+
 4. To end the program, go back to main menu and enter 3 (exit) to save changes made
 to the bank and allow for a graceful exit.
+
 ---
 ## Code
 1. This program consists of 4 files of code:
-2. 
+
 ```python
 |-bank_account.py #class of individual bank accounts, used for withdrawals, deposits, e.g.
 |-bank.py #class managing the whole bank, including transferring money, e.g.
