@@ -39,8 +39,9 @@ class Bank:
         password = input("Enter account password: ")
         while len(password) < 8:
             print("Password must be at least 8 characters long!")
+        email = input("Enter account email: ")
         number = self.generate_randint()
-        self.__accounts[number] = BankAccount(holder, str(number), 0, password)
+        self.__accounts[number] = BankAccount(holder, str(number), 0, password, email)
         print(f"Bank account of {holder} successfully created. Bank account number: {number}")
         return True
 
@@ -100,6 +101,15 @@ class Bank:
         else:
             print("Transfer failed.")
 
+    def retrieve_email(self, account_number: str):
+        account = None
+        for values in self.__accounts.values():
+            if values.account_number == account_number:
+                account = values
+        if account is None:
+            print("Account does not exist!")
+            return False
+        print(account.email)
 
     def debug(self):
         """Used for debugging only"""

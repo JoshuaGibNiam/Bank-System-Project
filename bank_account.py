@@ -13,6 +13,7 @@ class BankAccount:
 
     @property
     def email(self):
+        self.try_password()
         return self.__email
     @email.setter
     def email(self, email):
