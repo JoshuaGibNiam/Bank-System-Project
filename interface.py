@@ -44,7 +44,7 @@ class Interface:
             num = int(num)
             acc = self.__bank.retrieve_account_int(num)
             if acc != False:
-                balance = acc.get_balance()
+                balance = acc.balance
                 print(f"Balance for account: {num}: ${balance}")
             elif acc == False:
                 print("Account does not exist!")

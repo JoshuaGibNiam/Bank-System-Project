@@ -17,7 +17,9 @@ class Bank:
             with open(path, "r") as file:
                 self.__accounts = json.load(file)
             for key, values in self.__accounts.items():
-                self.__accounts[key] = BankAccount(values["holder"], values["number"], values["balance"])
+                self.__accounts[key] = BankAccount(values["holder"], values["number"],
+                                                   values["balance"], values["password"],
+                                                   values["email"])
             self.__accounts = {int(k): v for k, v in self.__accounts.items()}  ##json converts int keys into strings (took me 1.5 hours to realize ts)
         else:
             with open(path, "w") as file:
@@ -34,8 +36,11 @@ class Bank:
         while holder.isdigit():
             print("Account holder name must only contain alphabets!")
             holder = input("Enter account holder name: ").strip()
+        password = input("Enter account password: ")
+        while len(password) < 8:
+            print("Password must be at least 8 characters long!")
         number = self.generate_randint()
-        self.__accounts[number] = BankAccount(holder, str(number), 0)
+        self.__accounts[number] = BankAccount(holder, str(number), 0, password)
         print(f"Bank account of {holder} successfully created. Bank account number: {number}")
         return True
 
@@ -45,11 +50,12 @@ class Bank:
             return self.__accounts[num]
         else:
             return False
+
     def retrieve_account_str(self, name: str):
         """Retrieve account by account holder"""
         acc = []
         for obj in self.__accounts.values():
-            if obj.get_account_holder() == name:
+            if obj.account_holder == name:
                 acc.append(str(obj))
         if len(acc) == 0:
             return False
@@ -71,7 +77,7 @@ class Bank:
     def list_accounts(self):
         print("Active bank accounts:")
         for key, instance in self.__accounts.items():
-            print(f"{key}: {instance.get_account_holder()}")
+            print(f"{key}: {instance.account_holder}")
         print("End of list. \n")
         return True
 
@@ -79,9 +85,9 @@ class Bank:
         """Transfers amount from account 1 to account 2 (pass holder name as arg)"""
         acc1_obj, acc2_obj = None, None
         for values in self.__accounts.values():
-            if values.get_account_number() == account1:
+            if values.account_number == account1:
                 acc1_obj = values    #reassign account1 to BankAccount instance
-            if values.get_account_number() == account2:
+            if values.account_number == account2:
                 acc2_obj = values
         if acc2_obj is None:
             print("Account 2 holder name does not exist!")
@@ -94,6 +100,7 @@ class Bank:
         else:
             print("Transfer failed.")
 
+
     def debug(self):
         """Used for debugging only"""
         for keys in self.__accounts.keys():
@@ -104,6 +111,8 @@ class Bank:
         self.load()
 
         self.save()
+
+
 if __name__ == "__main__":
     bank = Bank()
     bank.load()
