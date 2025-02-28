@@ -39,6 +39,7 @@ class Bank:
         password = input("Enter account password: ")
         while len(password) < 8:
             print("Password must be at least 8 characters long!")
+            password = input("Enter account password: ")
         email = input("Enter account email: ")
         number = self.generate_randint()
         self.__accounts[number] = BankAccount(holder, str(number), 0, password, email)
@@ -63,6 +64,17 @@ class Bank:
         else:
             return acc
 
+    def reset_password(self, password: str, account_number: str):
+        account = None
+        for values in self.__accounts.values():
+            if values.account_number == account_number:
+                account = values
+        if account is None:
+            print("Account does not exist!")
+            return False
+        account.password = password
+        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        return True
 
     def delete_account(self, num):
         del self.__accounts[num]
@@ -109,7 +121,10 @@ class Bank:
         if account is None:
             print("Account does not exist!")
             return False
+        if not account.try_password():
+            return False
         print(account.email)
+        return True
 
     def debug(self):
         """Used for debugging only"""

@@ -9,11 +9,10 @@ class BankAccount:
         self.__email = email
 
     def __str__(self):
-        return f"BankAccount(account_holder = {self.__account_holder}, account_number = {self.__account_number}"
+        return f"BankAccount(account_holder = {self.__account_holder}, account_number = {self.__account_number})"
 
     @property
     def email(self):
-        self.try_password()
         return self.__email
     @email.setter
     def email(self, email):
@@ -21,6 +20,21 @@ class BankAccount:
     @property
     def password(self):
         return self.__password
+
+    @password.setter
+    def password(self, password):
+        count = 0
+        email = input("Verification: Enter this account's email: ")
+        while not email == self.email:
+            if count == 5:
+                print("Access denied!")
+                break
+            print("Incorrect email. Please try again.")
+            email = input("Verification: Enter this account's email: ")
+            count += 1
+        if email == self.__email:
+            self.__password = password
+            print(f"New password: {account.password}.")
 
     @property
     def account_holder(self) -> str:
@@ -89,10 +103,3 @@ class BankAccount:
 if __name__ == "__main__":
     print("TEST1: Create a new account.")
     account = BankAccount("John", "1234", 10000)
-    print(account)
-    account.deposit(100)
-    account.get_balance()
-    account.withdraw(20000)
-    account.get_balance()
-    account.deposit(-22)
-    account.get_account_number()

@@ -34,7 +34,8 @@ class Interface:
               "3. Withdraw Money\n"
               "4. Delete Account\n"
               "5. Retrieve Account Email\n"
-              "6. Back to Main Menu\n")
+              "6. Reset Password\n"
+              "7. Back to Main Menu\n")
     def handle_account_menu(self):
         """Handles commands for the account menu. Returns False if user wants to exit"""
         command = input("What would you like to do?(Enter 1-5): ")
@@ -101,7 +102,14 @@ class Interface:
         elif command == "5" or command.lower() == "retrieve email":
             num = input("Please enter your account number: ")
             self.__bank.retrieve_email(num)
-        elif command == "6" or command.lower() == "back to main menu" or command == "main menu":
+        elif command == "6" or command.lower() == "reset password":
+            num = input("Please enter your account number: ")
+            password = input("Enter new account password: ")
+            while len(password) < 8:
+                print("Password must be at least 8 characters long!")
+                password = input("Enter new account password: ")
+            self.__bank.reset_password(password, num)
+        elif command == "7" or command.lower() == "back to main menu" or command == "main menu":
             print("Heading back to main menu.")
             return False
         else:
